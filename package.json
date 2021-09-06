@@ -18,5 +18,8 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "umi-request": "^1.3.9"
   }
 }
