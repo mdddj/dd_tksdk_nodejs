@@ -43,3 +43,5 @@ class DdTaokeSdk {
 
 
 }
+
+export  default DdTaokeSdk
