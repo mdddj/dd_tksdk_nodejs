@@ -9,7 +9,7 @@ export interface Page<T> {
 export interface Result<T> {
   state: number;
   message: string;
-  data: T;
+  data: T | undefined;
 }
 
 export interface PagerModel {
@@ -38,7 +38,7 @@ export function responseIsSuccess<T>(result: Result<T>) {
  */
 export async function simpleHandleResultMessage<T>(
   result: Result<T>,
-  success?: (data: T) => void,
+  success?: (data?: T) => void,
   showSuccessMessage?: boolean,
   error?: (params: RequestParamError[] | undefined) => void,
 ) {
