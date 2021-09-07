@@ -44,7 +44,7 @@ export function successResultHandle<T>(result: Result<T>, success: (data: T) => 
 
 /**
  * 淘客数据转换 json string 字符串转对象
- * @param data  json字符串
+ * @param data  json字符串  Result.data 类型是json类型转成T
  */
 export function tkDataToObject<T>(data:string) : T {
     return JSON.parse(data) as T

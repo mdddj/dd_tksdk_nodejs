@@ -5,6 +5,8 @@ import ServerUtil from "./utils/ServerUtil";
 import request from "umi-request";
 import {TCategory} from "./model/tk/CategoryModel";
 import {successResultHandle, tkDataToObject} from "./utils/ResultUtil";
+import {MeituanCouponParam} from "./model/param/MeituanCouponParam";
+import {TMeituanData} from "./model/tk/MeituanData";
 
 const TAOKE_API = '/tkapi/api/v1/dtk/apis';
 
@@ -45,6 +47,22 @@ class TaokeApi {
                 successResultHandle<string>(value, data => {
                     resolve(tkDataToObject<TCategory[]>(data))
                 })
+            })
+        })
+    }
+
+
+    /**
+     * 获取美团推广链接
+     * @param params    生成参数
+     */
+    async getMeituanCoupon(params: MeituanCouponParam): Promise<TMeituanData> {
+        return new Promise(async resolve => {
+            const result = await request(`${this._host}/api/zhe/mt/tg`, {
+                params
+            })
+            successResultHandle<string>(result, data => {
+                resolve(tkDataToObject<TMeituanData>(data))
             })
         })
     }

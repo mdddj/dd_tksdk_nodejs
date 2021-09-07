@@ -22,4 +22,10 @@ tkApi.host = 'http://localhost'
 // /// 获取大分类
 // tkApi.getCategorys().then(value => {
 //     console.log(value)
-// })
+// }
+
+
+/// 获取美团推广链接
+tkApi.getMeituanCoupon({actId: '2', linkType: '1', miniCode: '1'}).then(r => {
+    console.log(r)
+})
