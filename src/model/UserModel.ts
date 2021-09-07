@@ -6,7 +6,6 @@ export interface User {
     email: string | null;
     picture: string;
     phone: String | null;
-    password: string;
     loginTime: null;
     type: number;
     roles: Role[];

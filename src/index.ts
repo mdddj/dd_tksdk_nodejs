@@ -1,14 +1,22 @@
 import ServerUtil from "./utils/ServerUtil";
-import request, {RequestMethod} from "umi-request";
+import request from "umi-request";
 import {Result} from "./utils/ResultUtil";
+import {User} from "./model/UserModel";
 
 /**
  * 接口访问类
  */
 class DdTaokeSdk {
 
+    _host: string | undefined
 
-    host: string = ServerUtil.getInstance().host
+    set host(v: string) {
+        this._host = v
+    }
+
+    get host(): string {
+        return this._host ?? ServerUtil.getInstance().host
+    }
 
     /**
      * 私有化类构造
@@ -37,6 +45,17 @@ class DdTaokeSdk {
             method: 'POST',
             data: {loginNumber, password},
         });
+    }
+
+    /**
+     * 根据jwt token 获取用户资料
+     *
+     *
+     *
+     * @param token jwt token
+     */
+    async getUserInfo(token: string): Promise<Result<User>> {
+        return request<Result<User>>(`${this.host}/api/get-user-by-token?token=${token}`)
     }
 
 

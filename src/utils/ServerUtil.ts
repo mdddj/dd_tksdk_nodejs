@@ -1,6 +1,6 @@
 
 class ServerUtil {
-    private defaultHost: string = 'http://192.168.199.69'
+    private defaultHost: string = 'https://itbug.shop'
     private _host: string | undefined;
     private ServeUtil() {
     }
