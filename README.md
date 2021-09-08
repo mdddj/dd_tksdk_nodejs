@@ -1,17 +1,44 @@
-sdk需要自己编译
-
-下载此仓库源代码
-
-需要安装nodejs
-
-
-修改`src/utils/ServerUtil.ts`下面的`defaultHost`属性修改为服务器地址`https://itbug.shop`
-
-在本项目根目录下运行
-
-```bash
-    npm install 
-    npm run build
+### 安装
+```bash 
+npm i dd_server_api
 ```
 
-会在根目录下生成`apis`文件夹,将该目录复制到项目目录下即可使用
+### 使用
+创建一个全局方法
+```ts
+export const taokeApi = () :TaokeApi=> {
+ const api = TaokeApi.getInstance()
+  api.host = 'http://localhost'
+  return api
+}
+```
+在页面中使用,例子
+```ts
+
+import React, {useState} from "react";
+import {useMount} from "@umijs/hooks";
+import {taokeApi} from "@/util/request";
+import {TMeituanData} from "dd_server_api/apis/model/tk/MeituanData";
+
+let api = taokeApi()  /// 引入api接口
+
+/**
+ * 首页美团领券广告
+ * @constructor
+ */
+const MeituanCoupon: React.FC = () => {
+  const [mtData, setMtData] = useState<TMeituanData>()
+  useMount(async () => {
+    const response = await api.getMeituanCoupon({actId: '2', linkType: '1', miniCode: '1'})
+    console.log(response)
+    setMtData(response)
+  })
+  return <>
+    {
+      mtData && <a href={mtData.data}>美团领券</a>
+    }
+  </>
+}
+export default MeituanCoupon
+
+```
