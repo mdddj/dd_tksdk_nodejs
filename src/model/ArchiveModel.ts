@@ -4,7 +4,8 @@
 //
 //   const archiveModel = Convert.toArchiveModel(json);
 
-import { Category, Tag } from '@/model/BlogModel';
+
+import {Category} from "./result/BlogPushNewResultData";
 
 export interface ArchiveModel {
   blogCount: number;
@@ -18,4 +19,9 @@ export interface ArchiveModel {
 export interface MonthsCount {
   count: number;
   months: string;
+}
+
+export interface Tag {
+  id: number;
+  name: string
 }

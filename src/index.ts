@@ -282,9 +282,13 @@ class DdTaokeSdk {
             data: model,
         });
     }
-
-
-// 获取字典列表
+    
+    /**
+     * 获取字典列表
+     * @param page  第几页
+     * @param pageSize 每页几条
+     * @param name  查询条件
+     */
     async getTextList(
         page: number,
         pageSize: number,
@@ -343,7 +347,6 @@ class DdTaokeSdk {
             this._host + '/api/blog/list?page=' + page + '&pageSize=' + pageSize,
         );
     }
-
 
     /**
      * 获取博客归档数据
