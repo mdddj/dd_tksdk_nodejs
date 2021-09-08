@@ -71,7 +71,7 @@ class DdTaokeSdk {
      * 发布一篇新博客
      */
     async pushNewBlog(params: PushNewBlogParams) {
-        return request<BlogPushNewResultData>(this._host + '/api/blog/push-new', {
+        return request<BlogPushNewResultData>(this._host + '/api/auth/blog-push-new', {
             method: 'POST',
             data: params,
         });
