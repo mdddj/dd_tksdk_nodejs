@@ -9,6 +9,7 @@ import {PageParam} from "./model/PageModel";
 import {ResCategory} from "./model/ResCategory";
 import {FileInfo} from "./model/FileInfo";
 import {ResourceModel} from "./model/ResourceModel";
+import {TextModel} from "./model/TextModel";
 
 /**
  * 接口访问类
@@ -278,6 +279,53 @@ class DdTaokeSdk {
         return request(this._host + '/api/auth/resource-save', {
             method: 'POST',
             data: model,
+        });
+    }
+
+
+// 获取字典列表
+    async getTextList(
+        page: number,
+        pageSize: number,
+        name?: string,
+    ): Promise<Result<{
+        list: TextModel[];
+        page: PagerModel;
+    }>> {
+        return request<Result<{
+            list: TextModel[];
+            page: PagerModel;
+        }>>(`/api/text/list`, {
+            method: 'GET',
+            params: {
+                page,
+                pageSize,
+                name,
+            },
+        });
+    }
+
+    /**
+     * 添加或者修改对象
+     * @param text  字典对象
+     */
+    async saveText(text: TextModel): Promise<Result<TextModel>> {
+        return request<Result<TextModel>>('/api/auth/text-update', {
+            method: 'POST',
+            data: text,
+        });
+    }
+
+    /**
+     * 根据id删除某个标签,需要管理员权限
+     * @param id 主键
+     */
+    async deleteTextById(id: string) {
+        return request<Result<string>>('/api/auth/text-delete', {
+            data: {
+                id,
+            },
+            method: 'DELETE',
         });
     }
 
