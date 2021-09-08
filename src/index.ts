@@ -4,12 +4,13 @@ import {merge} from 'lodash';
 import {Page, PagerModel, Result} from "./utils/ResultUtil";
 import {User} from "./model/UserModel";
 import PushNewBlogParams from "./model/param/PushNewBlogParamsModel";
-import {BlogPushNewResultData, Category} from "./model/result/BlogPushNewResultData";
+import {BlogData, BlogListData, BlogPushNewResultData, Category} from "./model/result/BlogPushNewResultData";
 import {PageParam} from "./model/PageModel";
 import {ResCategory} from "./model/ResCategory";
 import {FileInfo} from "./model/FileInfo";
 import {ResourceModel} from "./model/ResourceModel";
 import {TextModel} from "./model/TextModel";
+import {ArchiveModel} from "./model/ArchiveModel";
 
 /**
  * 接口访问类
@@ -329,6 +330,88 @@ class DdTaokeSdk {
         });
     }
 
+    /**
+     * 获取博客列表
+     * @param page  第几页
+     * @param pageSize 每页几条数据
+     */
+    async getBlogList(
+        page: number,
+        pageSize: number,
+    ): Promise<Result<BlogListData>> {
+        return request<Result<BlogListData>>(
+            this._host + '/api/blog/list?page=' + page + '&pageSize=' + pageSize,
+        );
+    }
+
+
+    /**
+     * 获取博客归档数据
+     */
+    async getArchives(): Promise<Result<ArchiveModel>> {
+        return request<Result<ArchiveModel>>(`${this._host}/api/blog/statistics`);
+    }
+
+    /**
+     * 根据博客别名获取博客详情
+     * @param alias 博客别名
+     */
+    async getBlogWithAlias(alias: string): Promise<Result<BlogData>> {
+        return request<Result<BlogData>>(`${this._host}/api/blog/alias?alias=${alias}`);
+    }
+
+    /**
+     *
+     * 获取特殊文本
+     * @param name 别名
+     * @returns
+     */
+    async getTextByName(
+        name: string,
+    ): Promise<Result<TextModel>> {
+        return request<Result<TextModel>>(
+            `${this._host}/api/blog/text?name=${name}`,
+        );
+    }
+
+
+    /**
+     * 根据标签id 获取博客列表
+     * @param tagId 标签id
+     * @param pageModel 分页数据
+     */
+    async getBlogsByTagId(tagId: number, pageModel: PageParam): Promise<Result<Page<BlogData>>> {
+        return request<Result<Page<BlogData>>>(this._host + '/api/blog/tag/blogs', {
+                method: 'GET',
+                params: merge({tagId}, pageModel)
+            }
+        )
+    }
+
+    /**
+     * 根据分类id 获取博客列表
+     * @param categoryId    分类id
+     * @param pageModel 分类数据
+     */
+    async getBlogsByCategoryId(categoryId: number, pageModel: PageParam): Promise<Result<Page<BlogData>>> {
+        return request<Result<Page<BlogData>>>(this._host + '/api/blog/category/blogs', {
+            method: 'GET',
+            params: merge({categoryId}, pageModel)
+        })
+    }
+
+
+    /**
+     * 根据月份进行分页查询博客列表
+     * @param month 月份
+     * @param pageModel 分类数据
+     */
+    async getBlogsByMonth(month: string, pageModel: PageParam) :Promise<Result<Page<BlogData>>> {
+        return request<Result<Page<BlogData>>>(this._host + '/api/blog/month/blogs', {
+            method: 'GET',
+            params: merge({month}, pageModel)
+        })
+    }
 
 }
 

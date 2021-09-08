@@ -4,6 +4,8 @@
 //
 //   const blogPushNewResultData = Convert.toBlogPushNewResultData(json);
 
+import {PagerModel} from "../../utils/ResultUtil";
+
 export interface BlogPushNewResultData {
   state:   number;
   message: string;
@@ -26,6 +28,11 @@ export interface Category {
   logo:       string;
   intro:      string;
   createTime: number;
+}
+
+export interface BlogListData {
+  page: PagerModel;
+  list: Array<BlogData>;
 }
 
 // Converts JSON strings to/from your types
