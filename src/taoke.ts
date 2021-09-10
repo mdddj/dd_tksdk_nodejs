@@ -12,6 +12,7 @@ import {PageParam} from "./model/PageModel";
 import {merge} from "lodash";
 import {BrandListModel} from "./model/result/BrandListModel";
 import {BrandDetailModel} from "./model/result/BrandDetailModel";
+import {Product} from "./model/ProductModel";
 
 const TAOKE_API = '/tkapi/api/v1/dtk/apis';
 
@@ -108,6 +109,14 @@ class TaokeApi {
      */
     async getBrandDetail(brandId: string,pageModel: PageParam) :Promise<BrandDetailModel>{
         return this.requestT<BrandDetailModel>('/brand-detail',merge({brandId},pageModel))
+    }
+    
+    /**
+     * 获取单品详情
+     * @param id    大淘客商品id
+     */
+    async getProductById(id:number) : Promise<Product> {
+        return this.requestT<Product>('/detail',{id})
     }
     
 }

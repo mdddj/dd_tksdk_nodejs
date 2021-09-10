@@ -2,6 +2,7 @@ import DdTaokeSdk from "../index";
 import {successResultHandle} from "../utils/ResultUtil";
 import {User} from "../model/UserModel";
 import TaokeApi from "../taoke";
+import {ProductUtil} from "../model/ProductModel";
 
 const req = DdTaokeSdk.getInstance()
 const tkApi = TaokeApi.getInstance()
@@ -46,6 +47,13 @@ tkApi.host = 'https://itbug.shop'
 // })
 
 /// 获取品牌详情
-tkApi.getBrandDetail('66590', {pageSize: 20, pageId: 1}).then(value => {
-    console.log(value)
+// tkApi.getBrandDetail('66590', {pageSize: 20, pageId: 1}).then(value => {
+//     console.log(value)
+// })
+
+tkApi.getProductById(35470316).then(value => {
+    let util  =new ProductUtil()
+    let images = util.detailCovert(value.detailPics)
+    console.log(images)
+    
 })
