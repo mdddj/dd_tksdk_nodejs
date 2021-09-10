@@ -33,12 +33,15 @@ export function responseIsSuccess<T>(result: Result<T>): boolean {
  * 当请求成功的时候处理函数
  * @param result    返回结果
  * @param success   成功执行方法 如果result.data 为null时不执行success方法
+ * @param error 返回错误信息
  */
-export function successResultHandle<T>(result: Result<T>, success: (data: T) => void) {
+export function successResultHandle<T>(result: Result<T>, success: (data: T) => void,error?: (message:string)=>void) {
     if (responseIsSuccess<T>(result)) {
         if(result.data){
             success(result.data)
         }
+    }else{
+        error?.(result.message)
     }
 }
 

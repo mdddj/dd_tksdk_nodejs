@@ -20,7 +20,7 @@ export interface BlogData {
   category:   Category;
   author:     string;
   thumbnail:  null;
-  dateString: string
+  dateString: string;
 }
 
 export interface Category {

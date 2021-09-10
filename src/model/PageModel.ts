@@ -1,6 +1,7 @@
 export interface PageParam {
-  page: number;
+  page?: number;
   pageSize: number;
+  pageId?: number;
 }
 
 export interface AntdTablePageParams {

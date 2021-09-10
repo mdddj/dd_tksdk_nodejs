@@ -6,7 +6,7 @@ import TaokeApi from "../taoke";
 const req = DdTaokeSdk.getInstance()
 const tkApi = TaokeApi.getInstance()
 req.host = 'http://localhost'
-tkApi.host = 'http://localhost'
+tkApi.host = 'https://itbug.shop'
 
 /// 登录接口测试
 // req.login("admin", "123456").then(data => {
@@ -18,11 +18,10 @@ tkApi.host = 'http://localhost'
 //     })
 // })
 
-
-// /// 获取大分类
+/// 获取大分类
 // tkApi.getCategorys().then(value => {
-//     console.log(value)
-// }
+//     console.log(value[0].cid)
+// })
 
 
 /// 获取美团推广链接
@@ -30,6 +29,17 @@ tkApi.host = 'http://localhost'
 //     console.log(r)
 // })
 
-req.getBlogList(1,4).then(value => {
+// 获取博客列表
+// req.getBlogList(1,4).then(value => {
+//     console.log(value)
+// })
+
+// /// 获取轮播图列表
+//
+// tkApi.getCarouselList().then(value => {
+//     console.log(value)
+// })
+
+tkApi.getBrandList(6, {pageId: 1, pageSize: 20}).then(value => {
     console.log(value)
 })
