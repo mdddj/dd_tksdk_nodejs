@@ -2,37 +2,58 @@
  * 淘客相关的接口
  */
 import ServerUtil from "./utils/ServerUtil";
-import request from "umi-request";
 import {TCategory} from "./model/tk/CategoryModel";
 import {Result, successResultHandle, tkDataToObject} from "./utils/ResultUtil";
 import {MeituanCouponParam} from "./model/param/MeituanCouponParam";
 import {TMeituanData} from "./model/tk/MeituanData";
 import {CarouselModel} from "./model/CarouselModel";
 import {PageParam} from "./model/PageModel";
-import {merge} from "lodash";
 import {BrandListModel} from "./model/result/BrandListModel";
 import {BrandDetailModel} from "./model/result/BrandDetailModel";
 import {Product} from "./model/ProductModel";
-
+import Taro from "@tarojs/taro"
 const TAOKE_API = '/tkapi/api/v1/dtk/apis';
+
 
 class TaokeApi {
     
+    /**
+     * 大淘客api
+     */
     get url(): string {
         return `${this._host}${TAOKE_API}`
     }
     
+    /**
+     * 服务器地址,局部变量
+     */
     _host: string | undefined
+    
+    /**
+     * 对象实例
+     */
     public static _instance: TaokeApi | undefined
     
+    /**
+     * 设置 服务器 host 地址
+     * @param v 服务器地址,后面的请求将发送到这个地址获取,例子 [https://itbug.shop]
+     */
     set host(v: string) {
         this._host = v
     }
     
+    /**
+     * 获取当前设置的服务器host地址
+     */
     get host(): string {
         return this._host ?? ServerUtil.getInstance().host
     }
     
+    /**
+     * 私有化对象实例,只允许new一个对象,单例模式
+     * @constructor
+     * @private
+     */
     private TaokeApi() {
     }
     
@@ -40,23 +61,32 @@ class TaokeApi {
      * 封装通用请求函数
      * @param url   接口url
      * @param param 请求参数
+     * @param taoke 是否为淘客api接口,默认为true,如果不是将直接使用url
      */
-    async requestT<T>(url: string, param?: any): Promise<T> {
+    async requestT<T>(url: string, param?: any, taoke?: boolean): Promise<T> {
         return new Promise<T>(async (resolve, reject) => {
-            const result = await request<Result<string>>(`${this.url}${url}`, {
-                method: 'GET',
-                params: param
+            let result: undefined | Result<string>
+            let response = await Taro.request<Result<string>>({
+                url: `${(taoke ?? true) ? this.url : this._host}${url}`,
+                method: "GET",
+                data: param
             })
-            successResultHandle<string>(result, data => {
-                resolve(tkDataToObject<T>(data))
-            },message => {
-                console.log(message)
-            })
+            result = response.data
+            if (result) {
+                successResultHandle<string>(result, data => {
+                    resolve(tkDataToObject<T>(data))
+                }, message => {
+                    console.log(message)
+                })
+            } else {
+                console.log('返回为空')
+            }
+            
         })
     }
     
     /**
-     * 获取示例
+     * 获取请求实例
      */
     public static getInstance(): TaokeApi {
         return this._instance ?? new TaokeApi()
@@ -76,14 +106,7 @@ class TaokeApi {
      * @param params    生成参数
      */
     async getMeituanCoupon(params: MeituanCouponParam): Promise<TMeituanData> {
-        return new Promise(async resolve => {
-            const result = await request(`${this._host}/api/zhe/mt/tg`, {
-                params
-            })
-            successResultHandle<string>(result, data => {
-                resolve(tkDataToObject<TMeituanData>(data))
-            })
-        })
+        return this.requestT<TMeituanData>('/api/zhe/mt/tg',params,false)
     }
     
     /**
@@ -99,7 +122,7 @@ class TaokeApi {
      * @param pageModel 分页数据
      */
     async getBrandList(cid: number, pageModel: PageParam): Promise<BrandListModel> {
-        return this.requestT<BrandListModel>('/brand-list', merge({cid}, pageModel))
+        return this.requestT<BrandListModel>('/brand-list', Object.assign({cid}, pageModel))
     }
     
     /**
@@ -107,16 +130,16 @@ class TaokeApi {
      * @param brandId 品牌id
      * @param pageModel 分页数据
      */
-    async getBrandDetail(brandId: string,pageModel: PageParam) :Promise<BrandDetailModel>{
-        return this.requestT<BrandDetailModel>('/brand-detail',merge({brandId},pageModel))
+    async getBrandDetail(brandId: string, pageModel: PageParam): Promise<BrandDetailModel> {
+        return this.requestT<BrandDetailModel>('/brand-detail', Object.assign({brandId}, pageModel))
     }
     
     /**
      * 获取单品详情
      * @param id    大淘客商品id
      */
-    async getProductById(id:number) : Promise<Product> {
-        return this.requestT<Product>('/detail',{id})
+    async getProductById(id: number): Promise<Product> {
+        return this.requestT<Product>('/detail', {id})
     }
     
 }

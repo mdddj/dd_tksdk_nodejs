@@ -1,12 +1,7 @@
-import DdTaokeSdk from "../index";
-import {successResultHandle} from "../utils/ResultUtil";
-import {User} from "../model/UserModel";
 import TaokeApi from "../taoke";
 import {ProductUtil} from "../model/ProductModel";
 
-const req = DdTaokeSdk.getInstance()
 const tkApi = TaokeApi.getInstance()
-req.host = 'http://localhost'
 tkApi.host = 'https://itbug.shop'
 
 /// 登录接口测试

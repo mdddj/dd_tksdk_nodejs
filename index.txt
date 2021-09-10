@@ -1,6 +1,5 @@
 import ServerUtil from "./utils/ServerUtil";
 import request from "umi-request";
-import {merge} from 'lodash';
 import {Page, PagerModel, Result} from "./utils/ResultUtil";
 import {User} from "./model/UserModel";
 import PushNewBlogParams from "./model/param/PushNewBlogParamsModel";
@@ -124,7 +123,7 @@ class DdTaokeSdk {
     async getCategoryForTableData(pageModel: PageParam, category?: Category) {
         return request(this._host + '/api/blog/category/list', {
             method: 'GET',
-            params: merge(pageModel, category),
+            params: Object.assign(pageModel, category),
         });
     }
 
@@ -190,7 +189,7 @@ class DdTaokeSdk {
     ): Promise<Result<Page<FileInfo>>> {
         return request<Result<Page<FileInfo>>>(this._host + '/api/file/get-files', {
             method: 'GET',
-            params: merge({id: folderId}, pageModel),
+            params: Object.assign({id: folderId}, pageModel),
         });
     }
 
@@ -230,7 +229,7 @@ class DdTaokeSdk {
             list: ResCategory[];
         }>>(this._host + '/api/res/list', {
             method: 'GET',
-            params: merge(pageModel, resCategory),
+            params: Object.assign(pageModel, resCategory),
         });
     }
 
@@ -386,7 +385,7 @@ class DdTaokeSdk {
     async getBlogsByTagId(tagId: number, pageModel: PageParam): Promise<Result<Page<BlogData>>> {
         return request<Result<Page<BlogData>>>(this._host + '/api/blog/tag/blogs', {
                 method: 'GET',
-                params: merge({tagId}, pageModel)
+                params: Object.assign({tagId}, pageModel)
             }
         )
     }
@@ -399,7 +398,7 @@ class DdTaokeSdk {
     async getBlogsByCategoryId(categoryId: number, pageModel: PageParam): Promise<Result<Page<BlogData>>> {
         return request<Result<Page<BlogData>>>(this._host + '/api/blog/category/blogs', {
             method: 'GET',
-            params: merge({categoryId}, pageModel)
+            params: Object.assign({categoryId}, pageModel)
         })
     }
 
@@ -412,7 +411,7 @@ class DdTaokeSdk {
     async getBlogsByMonth(month: string, pageModel: PageParam) :Promise<Result<Page<BlogData>>> {
         return request<Result<Page<BlogData>>>(this._host + '/api/blog/month/blogs', {
             method: 'GET',
-            params: merge({month}, pageModel)
+            params: Object.assign({month}, pageModel)
         })
     }
 
