@@ -40,6 +40,12 @@ tkApi.host = 'https://itbug.shop'
 //     console.log(value)
 // })
 
-tkApi.getBrandList(6, {pageId: 1, pageSize: 20}).then(value => {
+/// 获取品牌列表
+// tkApi.getBrandList(6, {pageId: 1, pageSize: 20}).then(value => {
+//     console.log(value)
+// })
+
+/// 获取品牌详情
+tkApi.getBrandDetail('66590', {pageSize: 20, pageId: 1}).then(value => {
     console.log(value)
 })
