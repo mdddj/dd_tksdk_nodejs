@@ -11,7 +11,7 @@ import {PageParam} from "./model/PageModel";
 import {BrandListModel} from "./model/result/BrandListModel";
 import {BrandDetailModel} from "./model/result/BrandDetailModel";
 import {Product} from "./model/ProductModel";
-import Taro from "@tarojs/taro"
+import axios from "axios-miniprogram";
 const TAOKE_API = '/tkapi/api/v1/dtk/apis';
 
 
@@ -66,8 +66,7 @@ class TaokeApi {
     async requestT<T>(url: string, param?: any, taoke?: boolean): Promise<T> {
         return new Promise<T>(async (resolve, reject) => {
             let result: undefined | Result<string>
-            let response = await Taro.request<Result<string>>({
-                url: `${(taoke ?? true) ? this.url : this._host}${url}`,
+            let response = await axios.get<Result<string>>( `${(taoke ?? true) ? this.url : this._host}${url}`,{
                 method: "GET",
                 data: param
             })

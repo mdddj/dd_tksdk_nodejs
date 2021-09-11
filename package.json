@@ -1,6 +1,6 @@
 {
   "name": "dd_server_api",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "description": "典典的小卖部 nodejs sdk",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,6 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "@tarojs/taro": "^3.3.7"
+    "axios-miniprogram": "^2.0.0-rc-2"
   }
 }
