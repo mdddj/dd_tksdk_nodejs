@@ -1,8 +1,13 @@
 import TaokeApi from "../taoke";
 import {ProductUtil} from "../model/ProductModel";
+import DdServerApiByWeb from "../blog";
 
 const tkApi = TaokeApi.getInstance()
 tkApi.host = 'https://itbug.shop'
+
+const blogApi = DdServerApiByWeb.getInstance()
+blogApi.host = 'https://itbug.shop'
+
 
 /// 登录接口测试
 // req.login("admin", "123456").then(data => {
@@ -46,9 +51,13 @@ tkApi.host = 'https://itbug.shop'
 //     console.log(value)
 // })
 
-tkApi.getProductById(35470316).then(value => {
-    let util  =new ProductUtil()
-    let images = util.detailCovert(value.detailPics)
-    console.log(images)
-    
-})
+// tkApi.getProductById(35470316).then(value => {
+//     let util  =new ProductUtil()
+//     let images = util.detailCovert(value.detailPics)
+//     console.log(images)
+//
+// })
+//
+// blogApi.getPics(1).then(value => {
+//     console.log(value)
+// })

@@ -12,6 +12,7 @@ import {BrandListModel} from "./model/result/BrandListModel";
 import {BrandDetailModel} from "./model/result/BrandDetailModel";
 import {Product} from "./model/ProductModel";
 import axios from "axios-miniprogram";
+import {ProductListParam, ProductListResult} from "./model/ProductListParam";
 const TAOKE_API = '/tkapi/api/v1/dtk/apis';
 
 
@@ -140,7 +141,16 @@ class TaokeApi {
     async getProductById(id: number): Promise<Product> {
         return this.requestT<Product>('/detail', {id})
     }
-    
+
+    /**
+     * 获取商品列表
+     * @param params    请求参数
+     */
+    async getProductList(params: ProductListParam): Promise<ProductListResult> {
+        return this.requestT<ProductListResult>('/goods', params)
+    }
+
+
 }
 
 
