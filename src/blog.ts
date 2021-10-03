@@ -72,21 +72,18 @@ class DdServerApiByWeb {
      */
     async requestT<T>(url: string, param?: any,method?: 'GET' | 'POST' | 'DELETE'　, taoke?: boolean): Promise<T> {
         return new Promise<T>(async (resolve, reject) => {
-            let result: undefined | Result<string>
-            let response = await axios<Result<string>>( `${this._host}${url}`,{
+            let result: undefined | T
+            let response = await axios<T>( `${this._host}${url}`,{
                 method: method ?? "GET",
                 data: param,
                 params: param
             })
             result = response.data
             if (result) {
-                successResultHandle<string>(result, data => {
-                    resolve(tkDataToObject<T>(data))
-                }, message => {
-                    console.log(message)
-                })
+                resolve(result)
             } else {
                 console.log('返回为空')
+                reject('没有返回数据')
             }
 
         })
@@ -446,6 +443,15 @@ class DdServerApiByWeb {
      */
     async updateUserProfile(user: User): Promise<Result<User | undefined>> {
         return this.requestT<Result<User | undefined>>('/api/u/update-profile', user, 'POST')
+    }
+
+    /**
+     * 获取资源文件夹下面的列表
+     * @param pageModel 分页数据
+     * @param filterparam   过滤筛选参数对象
+     */
+    async getResourcePostList(pageModel:PageParam,filterparam?: ResourceModel) : Promise<Result<{page:PagerModel,list: ResourceModel[]}>> {
+        return this.requestT<Result<{page:PagerModel,list: ResourceModel[]}>>('/api/resource/list',Object.assign(pageModel,filterparam))
     }
 
 }
