@@ -1,6 +1,6 @@
 {
   "name": "dd_server_api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "典典的小卖部 nodejs sdk 小程序版本",
   "main": "index.js",
   "scripts": {

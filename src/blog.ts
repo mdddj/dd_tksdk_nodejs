@@ -73,9 +73,10 @@ class DdServerApiByWeb {
     async requestT<T>(url: string, param?: any,method?: 'GET' | 'POST' | 'DELETE'　, taoke?: boolean): Promise<T> {
         return new Promise<T>(async (resolve, reject) => {
             let result: undefined | Result<string>
-            let response = await axios.get<Result<string>>( `${this._host}${url}`,{
+            let response = await axios<Result<string>>( `${this._host}${url}`,{
                 method: method ?? "GET",
-                data: param
+                data: param,
+                params: param
             })
             result = response.data
             if (result) {
