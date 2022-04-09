@@ -1,6 +1,6 @@
 {
   "name": "dd_server_api",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "典典的小卖部 nodejs sdk 小程序版本",
   "main": "index.js",
   "scripts": {
@@ -13,11 +13,11 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.7.10",
-    "nodemon": "^2.0.12",
+    "@types/node": "^17.0.23",
+    "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "axios-miniprogram": "^2.0.0-rc-2"

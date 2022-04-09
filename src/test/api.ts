@@ -1,6 +1,6 @@
-import TaokeApi from "../taoke";
+import TaokeApi from "../TaokeApi";
 import {ProductUtil} from "../model/ProductModel";
-import DdServerApiByWeb from "../blog";
+import DdServerApiByWeb from "../DdServerApiByWeb";
 
 const tkApi = TaokeApi.getInstance()
 tkApi.host = 'https://itbug.shop'
